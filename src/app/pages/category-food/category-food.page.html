@@ -1,145 +1,298 @@
 <ion-header class="ion-no-border">
-  <ion-item lines="none">
-    <ion-avatar slot="end">
-      <img src="https://avatars.dicebear.com/v2/male/bd47925667cb2a1aa4f9a2094eb8bfa3.svg">
-    </ion-avatar>
-    <ion-label>
-      <h2>Idlal Maulana Wahid</h2>
-      <p>DNR Corporation</p>
-    </ion-label>
-  </ion-item>
-  <ion-item lines="none">
-    <ion-searchbar (ionChange)="searchItems($event.target, 'searchAll')"></ion-searchbar>
-  </ion-item>
+  <div *ngIf="!loadSkeleton">
+    <ion-item lines="none">
+      <ion-avatar slot="end">
+        <img src="https://avatars.dicebear.com/v2/male/bd47925667cb2a1aa4f9a2094eb8bfa3.svg">
+      </ion-avatar>
+      <ion-label>
+        <h2>Idlal Maulana Wahid</h2>
+        <p>DNR Corporation</p>
+      </ion-label>
+    </ion-item>
+    <ion-item lines="none"(click)="searchItems()">
+      <ion-searchbar></ion-searchbar>
+    </ion-item>
+  </div>
+
+  <div *ngIf="loadSkeleton">
+    <ion-item lines="none">
+      <ion-avatar slot="end">
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-avatar>
+      <ion-label>
+        <ion-skeleton-text animated style="width: 50%;">
+        </ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 30%;">
+        </ion-skeleton-text>
+      </ion-label>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-skeleton-text animated style="width: 100%; height: 40px; border-radius: 15px;">
+      </ion-skeleton-text>
+    </ion-item>
+  </div>
+
 </ion-header>
 
 <ion-content [fullscreen]="true">
 
-  <div class="ion-padding wrapper">
-    <ion-grid class="ion-no-padding">
-      <ion-row class="ion-align-items-baseline">
-        <ion-col size="6">
-          <h4 class="title">
-            All Categories
-          </h4>
-        </ion-col>
-        <ion-col size="6">
-          <h4 class="more ion-text-end" (click)="showMore('all', '')">
-            Show more
-          </h4>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
+  <div *ngIf="!loadSkeleton">
 
-
-  <ion-grid class="ion-no-padding">
-    <ion-row>
-      <ion-col size="12">
-        <ion-slides [options]="options">
-
-          <ion-slide *ngFor="let item of listCategory">
-            <ion-card class="card" (click)="showMore('all',item.strCategory)">
-              <ion-card-content class="ion-text-left">
-
-                <div class="img-wrapper">
-                  <ion-img class="image" [src]="item.strCategoryThumb">
-                  </ion-img>
-                </div>
-
-                <ion-card-title class="title">{{item.strCategory}}</ion-card-title>
-                <ion-card-subtitle>Some description here</ion-card-subtitle>
-                <ion-card-subtitle>
-                  <ion-icon name="star"></ion-icon>
-                  <ion-icon name="star"></ion-icon>
-                  <ion-icon name="star"></ion-icon>
-                  <ion-icon name="star"></ion-icon>
-                  <ion-icon name="star"></ion-icon>
-                </ion-card-subtitle>
-              </ion-card-content>
-            </ion-card>
-          </ion-slide>
-
-        </ion-slides>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-  <div class="ion-padding-horizontal wrapper">
+    <div class="ion-padding wrapper">
+      <ion-grid class="ion-no-padding">
+        <ion-row class="ion-align-items-baseline">
+          <ion-col size="6">
+            <h4 class="title">
+              All Categories
+            </h4>
+          </ion-col>
+          <ion-col size="6">
+            <h4 class="more ion-text-end" (click)="showMore('all', '')">
+              Show more
+            </h4>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
 
     <ion-grid class="ion-no-padding">
-      <ion-row class="ion-align-items-baseline">
-        <ion-col size="6">
-          <h4 class="title">
-            Categories by Area
-          </h4>
-        </ion-col>
-        <ion-col size="6">
-          <h4 class="more ion-text-end" (click)="showMore('area', '')">
-            Show more
-          </h4>
+      <ion-row>
+        <ion-col size="12">
+          <ion-slides [options]="options">
+
+            <ion-slide *ngFor="let item of listCategory">
+              <ion-card class="card" (click)="showMore('all',item.strCategory)">
+                <ion-card-content class="ion-text-left">
+
+                  <div class="img-wrapper">
+                    <ion-img class="image" [src]="item.strCategoryThumb">
+                    </ion-img>
+                  </div>
+
+                  <ion-card-title class="title">{{item.strCategory}}</ion-card-title>
+                  <ion-card-subtitle>Some description here</ion-card-subtitle>
+                  <ion-card-subtitle>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                  </ion-card-subtitle>
+                </ion-card-content>
+              </ion-card>
+            </ion-slide>
+
+          </ion-slides>
         </ion-col>
       </ion-row>
     </ion-grid>
 
-  </div>
-
-  <ion-grid class="ion-no-padding">
-    <ion-row>
-      <ion-col size="12">
-        <ion-slides [options]="categories">
-
-          <ion-slide *ngFor="let item of listCategoryArea">
-            <ion-card class="category" color="danger" (click)="showMore('area',item.strArea)">
-              <ion-card-header class="ion-text-center">
-                <!-- <ion-icon src="assets/dish.svg"></ion-icon> -->
-                <ion-card-title>{{item.strArea}}</ion-card-title>
-                <ion-card-subtitle>Food</ion-card-subtitle>
-              </ion-card-header>
-            </ion-card>
-          </ion-slide>
-
-        </ion-slides>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-  <div class="ion-padding-horizontal wrapper">
+    <div class="ion-padding-horizontal wrapper">
+      <ion-grid class="ion-no-padding">
+        <ion-row class="ion-align-items-baseline">
+          <ion-col size="6">
+            <h4 class="title">
+              Categories by Area
+            </h4>
+          </ion-col>
+          <ion-col size="6">
+            <h4 class="more ion-text-end" (click)="showMore('area', '')">
+              Show more
+            </h4>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
 
     <ion-grid class="ion-no-padding">
-      <ion-row class="ion-align-items-baseline">
-        <ion-col size="6">
-          <h4 class="title">
-            Categories by Ingredients
-          </h4>
+      <ion-row>
+        <ion-col size="12">
+          <ion-slides [options]="categories">
+
+            <ion-slide *ngFor="let item of listCategoryArea">
+              <ion-card class="category" color="danger" (click)="showMore('area',item.strArea)">
+                <ion-card-header class="ion-text-center">
+                  <ion-card-title>{{item.strArea}}</ion-card-title>
+                  <ion-card-subtitle>Food</ion-card-subtitle>
+                </ion-card-header>
+              </ion-card>
+            </ion-slide>
+
+          </ion-slides>
         </ion-col>
-        <ion-col size="6">
-          <h4 class="more ion-text-end" (click)="showMore('ingredients', '')">
-            Show more
-          </h4>
+      </ion-row>
+    </ion-grid>
+
+    <div class="ion-padding-horizontal wrapper">
+
+      <ion-grid class="ion-no-padding">
+        <ion-row class="ion-align-items-baseline">
+          <ion-col size="6">
+            <h4 class="title">
+              Categories by Ingredients
+            </h4>
+          </ion-col>
+          <ion-col size="6">
+            <h4 class="more ion-text-end" (click)="showMore('ingredients', '')">
+              Show more
+            </h4>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </div>
+
+    <ion-grid class="ion-no-padding">
+      <ion-row>
+        <ion-col size="12">
+          <ion-slides [options]="categories">
+
+            <ion-slide *ngFor="let item of listCategoryIngredients">
+              <ion-card class="category" color="tertiary" (click)="showMore('ingredients',item.strIngredient)">
+                <ion-card-header class="ion-text-center">
+                  <ion-card-title>{{item.strIngredient}}</ion-card-title>
+                  <ion-card-subtitle>Food</ion-card-subtitle>
+                </ion-card-header>
+              </ion-card>
+            </ion-slide>
+
+          </ion-slides>
         </ion-col>
       </ion-row>
     </ion-grid>
 
   </div>
+  <!-- ============================ skeleton ============================ -->
+  <div *ngIf="loadSkeleton">
+    <div class="ion-padding wrapper">
+      <ion-grid class="ion-no-padding">
+        <ion-row class="ion-align-items-baseline">
+          <ion-col size="6">
+            <h4 class="title">
+              <ion-skeleton-text animated style="width: 70%;">
+              </ion-skeleton-text>
+            </h4>
+          </ion-col>
+          <ion-col size="6">
+            <h4 class="more ion-text-end" fxLayoutAlign="end center">
+              <ion-skeleton-text animated style="width: 40%;">
+              </ion-skeleton-text>
+            </h4>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
 
-  <ion-grid class="ion-no-padding">
-    <ion-row>
-      <ion-col size="12">
-        <ion-slides [options]="categories">
 
-          <ion-slide *ngFor="let item of listCategoryIngredients">
-            <ion-card class="category" color="tertiary" (click)="showMore('ingredients',item.strIngredient)">
-              <ion-card-header class="ion-text-center">
-                <ion-card-title>{{item.strIngredient}}</ion-card-title>
-                <ion-card-subtitle>Food</ion-card-subtitle>
-              </ion-card-header>
-            </ion-card>
-          </ion-slide>
+    <ion-grid class="ion-no-padding">
+      <ion-row>
+        <ion-col size="12">
+          <ion-slides [options]="options">
 
-        </ion-slides>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+            <ion-slide *ngFor="let item of [0,1,2,3,4,5]">
+              <ion-card class="card">
+                <ion-card-content class="ion-text-left">
 
+                  <div class="img-wrapper">
+                    <ion-skeleton-text animated style="width: 100%;">
+                    </ion-skeleton-text>
+                  </div>
+
+                  <ion-card-title class="title">
+                    <ion-skeleton-text animated style="width: 30%;">
+                    </ion-skeleton-text>
+                  </ion-card-title>
+                  <ion-card-subtitle>
+                    <ion-skeleton-text animated style="width: 70%;">
+                    </ion-skeleton-text>
+                  </ion-card-subtitle>
+                  <ion-card-subtitle>
+                    <ion-skeleton-text animated style="width: 30%;">
+                    </ion-skeleton-text>
+                  </ion-card-subtitle>
+                </ion-card-content>
+              </ion-card>
+            </ion-slide>
+
+          </ion-slides>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+    <div class="ion-padding wrapper">
+      <ion-grid class="ion-no-padding">
+        <ion-row class="ion-align-items-baseline">
+          <ion-col size="6">
+            <h4 class="title">
+              <ion-skeleton-text animated style="width: 70%;">
+              </ion-skeleton-text>
+            </h4>
+          </ion-col>
+          <ion-col size="6">
+            <h4 class="more ion-text-end" fxLayoutAlign="end center">
+              <ion-skeleton-text animated style="width: 40%;">
+              </ion-skeleton-text>
+            </h4>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+
+    <ion-grid class="ion-no-padding">
+      <ion-row>
+        <ion-col size="12">
+          <ion-slides [options]="categories">
+
+            <ion-slide *ngFor="let item of [0,1,2,3,4,5]">
+              <ion-card class="category">
+                <ion-skeleton-text fxLayoutAlign="center center" animated style="width: 100%; height: 70px;">
+                </ion-skeleton-text>
+              </ion-card>
+            </ion-slide>
+
+          </ion-slides>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+    <div class="ion-padding wrapper">
+      <ion-grid class="ion-no-padding">
+        <ion-row class="ion-align-items-baseline">
+          <ion-col size="6">
+            <h4 class="title">
+              <ion-skeleton-text animated style="width: 70%;">
+              </ion-skeleton-text>
+            </h4>
+          </ion-col>
+          <ion-col size="6">
+            <h4 class="more ion-text-end" fxLayoutAlign="end center">
+              <ion-skeleton-text animated style="width: 40%;">
+              </ion-skeleton-text>
+            </h4>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <ion-grid class="ion-no-padding">
+      <ion-row>
+        <ion-col size="12">
+          <ion-slides [options]="categories">
+
+            <ion-slide *ngFor="let item of [0,1,2,3,4,5]">
+              <ion-card class="category">
+                <ion-skeleton-text fxLayoutAlign="center center" animated style="width: 100%; height: 70px;">
+                </ion-skeleton-text>
+              </ion-card>
+            </ion-slide>
+
+          </ion-slides>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </div>
 </ion-content>

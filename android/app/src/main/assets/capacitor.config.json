@@ -1,6 +1,6 @@
 {
   "appId": "io.ionic.starter",
-  "appName": "c",
+  "appName": "DNR Test",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",

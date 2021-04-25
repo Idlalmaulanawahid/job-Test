@@ -13,6 +13,9 @@ export class ListFoodPage implements OnInit {
   valueCategory: any;
   listData = [];
   type: any;
+  loadSkeleton: boolean = true
+  loadSkeletonContent: boolean = true
+
 
   constructor(
     public apiService: ApiService,
@@ -68,7 +71,7 @@ export class ListFoodPage implements OnInit {
   }
 
   changeSelect(event, data) {
-
+    this.loadSkeletonContent = true
     if (this.type === 'all') {
       const index = this.listCategory.findIndex(
         item => item.strValue === data
@@ -93,6 +96,8 @@ export class ListFoodPage implements OnInit {
   getFilterData(param) {
     this.apiService.apiFood('filter.php?' + param).then((result: any) => {
       this.listData = result.meals
+      this.loadSkeleton = false
+      this.loadSkeletonContent = false
       // console.log('sukses', JSON.stringify(this.listData))
     }).catch(err => {
       console.log('error', err)

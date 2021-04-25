@@ -10,6 +10,7 @@ import { ApiService } from 'src/app/services/api.service';
 export class FoodDetailPage implements OnInit {
 
   listData: any;
+  loadSkeleton: boolean = true
 
   constructor(
     private route: ActivatedRoute,
@@ -27,6 +28,7 @@ export class FoodDetailPage implements OnInit {
 
   getDetailItems(ev: any) {
     this.apiService.apiFood('lookup.php?i=' + ev).then((result: any) => {
+      this.loadSkeleton = false
       this.listData = result.meals[0]
       let dataTmpIngredient = [];
       let dataTmpMeasure = [];

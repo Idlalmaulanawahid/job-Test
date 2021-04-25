@@ -29,6 +29,9 @@ export class CategoryFoodPage implements OnInit {
   subscription: any;
   valueSearch: any;
 
+  loadSkeleton: boolean = true;
+  searchText: any
+
   constructor(
     public apiService: ApiService,
     private router: Router,
@@ -46,6 +49,7 @@ export class CategoryFoodPage implements OnInit {
   getAllCategory() {
     this.apiService.apiFood('categories.php').then((result: any) => {
       this.listCategory = result.categories
+      this.loadSkeleton = false
     }).catch(err => {
     });
   }
@@ -84,6 +88,7 @@ export class CategoryFoodPage implements OnInit {
   }
 
   ionViewDidEnter() {
+    this.searchText = null
     this.subscription = this.platform.backButton.subscribe(async () => {
       if (
         this.router.isActive('/category-food', true) && this.router.url === '/category-food'
@@ -108,27 +113,23 @@ export class CategoryFoodPage implements OnInit {
     });
   }
 
-  async searchItems(ev, type) {
-    if (ev.value.length > 0) {
-      console.log('masuk ifff', JSON.stringify(ev.value.length), JSON.stringify(type))
-      const modal = await this.modalController.create({
-        component: ListFoodModalPage,
-        componentProps: {
-          data: ev.value,
-          type: type
-        }
+  async searchItems() {
+    const modal = await this.modalController.create({
+      component: ListFoodModalPage,
+      componentProps: {
+        data: '',
+        type: 'searchAll'
+      }
 
-      });
+    });
 
-      modal.onDidDismiss().then((dataReturned) => {
-        console.log('masuk dataReturned', JSON.stringify(dataReturned))
-        // if (dataReturned !== null) {
-        //   this.dataReturned = dataReturned.data;
-        // }
-      });
+    modal.onDidDismiss().then((dataReturned) => {
+      this.searchText = null
+      console.log('masuk dataReturned', JSON.stringify(dataReturned))
+    });
 
-      return await modal.present();
-    }
+    return await modal.present();
+
 
   }
 }

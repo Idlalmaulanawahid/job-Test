@@ -1,40 +1,84 @@
 <ion-header class="ion-no-border">
-  <ion-item lines="none">
-    <ion-button fill="clear">
-      <ion-back-button icon="chevron-back"></ion-back-button>
-    </ion-button>
-    <ion-label color="medium">Select Categories</ion-label>
-    <ion-select class="select-area" okText="Okay" cancelText="Dismiss" [(ngModel)]="valueCategory"
-      [selectedText]="valueCategory" (ionChange)="changeSelect($event, valueCategory)">
-      <ion-select-option *ngFor="let code of listCategory" value="{{code.strValue}}">{{code.strValue}}
-      </ion-select-option>
-    </ion-select>
-  </ion-item>
-  <ion-item lines="none">
-    <ion-searchbar (ionChange)="searchItems($event.target)"></ion-searchbar>
-  </ion-item>
+  <div *ngIf="!loadSkeleton">
+    <ion-item lines="none">
+      <ion-button fill="clear">
+        <ion-back-button icon="chevron-back"></ion-back-button>
+      </ion-button>
+      <ion-label color="medium">Select Categories</ion-label>
+      <ion-select class="select-area" okText="Okay" cancelText="Dismiss" [(ngModel)]="valueCategory"
+        [selectedText]="valueCategory" (ionChange)="changeSelect($event, valueCategory)">
+        <ion-select-option *ngFor="let code of listCategory" value="{{code.strValue}}">{{code.strValue}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+  </div>
+  <div *ngIf="!loadSkeletonContent">
+    <ion-item lines="none">
+      <ion-searchbar (ionChange)="searchItems($event.target)"></ion-searchbar>
+    </ion-item>
+  </div>
+
+  <div *ngIf="loadSkeleton">
+    <ion-item lines="none">
+      <ion-skeleton-text animated style="width: 100%; height: 40px; border-radius: 15px;">
+      </ion-skeleton-text>
+    </ion-item>
+  </div>
+  <div *ngIf="loadSkeletonContent">
+    <ion-item lines="none">
+      <ion-skeleton-text animated style="width: 100%; height: 40px; border-radius: 15px;">
+      </ion-skeleton-text>
+    </ion-item>
+  </div>
 </ion-header>
 
 
 <ion-content>
 
-  <ion-list lines="none" *ngFor="let item of listData">
-    <ion-card class="card" (click)="viewDetail(item.idMeal)">
-      <ion-card-content class="ion-text-left">
-        <div class="img-wrapper">
-          <ion-img [src]="item.strMealThumb">
-          </ion-img>
-        </div>
-        <ion-card-title class="title">{{item.strMeal}}</ion-card-title>
-        <ion-card-subtitle>Some description here</ion-card-subtitle>
-        <ion-card-subtitle>
-          <ion-icon name="star"></ion-icon>
-          <ion-icon name="star"></ion-icon>
-          <ion-icon name="star"></ion-icon>
-          <ion-icon name="star"></ion-icon>
-          <ion-icon name="star"></ion-icon>
-        </ion-card-subtitle>
-      </ion-card-content>
-    </ion-card>
-  </ion-list>
+  <div *ngIf="!loadSkeletonContent">
+    <ion-list lines="none" *ngFor="let item of listData">
+      <ion-card class="card" (click)="viewDetail(item.idMeal)">
+        <ion-card-content class="ion-text-left">
+          <div class="img-wrapper">
+            <ion-img [src]="item.strMealThumb">
+            </ion-img>
+          </div>
+          <ion-card-title class="title">{{item.strMeal}}</ion-card-title>
+          <ion-card-subtitle>Some description here</ion-card-subtitle>
+          <ion-card-subtitle>
+            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star"></ion-icon>
+          </ion-card-subtitle>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+  </div>
+
+  <div *ngIf="loadSkeletonContent">
+    <ion-list lines="none" *ngFor="let item of [0,1,2,3,4,5,6,7]">
+      <ion-card class="card">
+        <ion-card-content class="ion-text-left">
+          <div class="img-wrapper">
+            <ion-skeleton-text animated style="width: 100%;">
+            </ion-skeleton-text>
+          </div>
+          <ion-card-title class="title">
+            <ion-skeleton-text animated style="width: 30%;">
+            </ion-skeleton-text>
+          </ion-card-title>
+          <ion-card-subtitle>
+            <ion-skeleton-text animated style="width: 70%;">
+            </ion-skeleton-text>
+          </ion-card-subtitle>
+          <ion-card-subtitle>
+            <ion-skeleton-text animated style="width: 30%;">
+            </ion-skeleton-text>
+          </ion-card-subtitle>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+  </div>
 </ion-content>

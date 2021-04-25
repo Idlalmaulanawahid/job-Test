@@ -15,7 +15,8 @@ export class ListFoodModalPage implements OnInit {
   listData = [];
   type: any;
   selectCategories: boolean = true
-  searchText: any
+  loadSkeletonContent: boolean = true
+
 
   constructor(
     public apiService: ApiService,
@@ -24,31 +25,36 @@ export class ListFoodModalPage implements OnInit {
     public modalController: ModalController
 
   ) {
-    this.searchText = this.navParams?.data.data
-    console.log('paramData', JSON.stringify(this.searchText))
   }
 
   ngOnInit() {
-
+    this.apiService.apiFood('search.php?s=').then((result: any) => {
+      console.log('masuk skeleton',)
+      this.loadSkeletonContent = false
+      this.listData = result.meals
+    }).catch(err => {
+      console.log('error', err)
+    });
   }
 
   async closeModal() {
     this.selectCategories = true
+    this.loadSkeletonContent = false
     const onClosedData: string = "Wrapped Up!";
     await this.modalController.dismiss(onClosedData);
   }
 
   searchItems(ev) {
-    if (ev.value.length < 1) {
-      this.closeModal()
-    } else {
-      this.apiService.apiFood('search.php?s=' + ev.value).then((result: any) => {
-        this.listData = result.meals
-        // console.log('sukses', JSON.stringify(this.listData))
-      }).catch(err => {
-        console.log('error', err)
-      });
-    }
+    this.loadSkeletonContent = true
+    this.apiService.apiFood('search.php?s=' + ev.value).then((result: any) => {
+      console.log('masuk skeleton',)
+      this.loadSkeletonContent = false
+      this.listData = result.meals
+      // console.log('sukses', JSON.stringify(this.listData))
+    }).catch(err => {
+      console.log('error', err)
+    });
+
   }
 
   viewDetail(idMeal) {
