@@ -1,0 +1,31 @@
+ion-toolbar {
+  --background: transparent;
+  --border-color: transparent;
+}
+
+ion-content {
+  --offset-top: 0px;
+  position: absolute;
+  text-align: center;
+
+  .desc {
+    text-align: left;
+    padding-bottom: 20px;
+
+    h4 {
+      font-weight: 900;
+    }
+
+    h6 {
+      font-weight: 400;
+      color: #47615a;
+      line-height: .7cm;
+      text-align: justify;
+      text-justify: inter-word;
+      margin: 0;
+      margin-top: 2px;
+      margin-bottom: 2px;
+    }
+  }
+
+}

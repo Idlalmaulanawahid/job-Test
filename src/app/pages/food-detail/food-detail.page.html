@@ -1,0 +1,36 @@
+<ion-header class="ion-no-border" #header>
+  <ion-toolbar #toolbar>
+    <ion-button fill="clear">
+      <ion-back-button icon="chevron-back"></ion-back-button>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]='true' [scrollEvents]='true' [appHideHeader]='header'>
+  <ion-img [src]='listData?.strMealThumb'></ion-img>
+  <div class="ion-padding">
+    <div class="ion-padding">
+      <div class="desc">
+        <h4>
+          {{listData?.strMeal}}
+        </h4>
+        <h4>
+          Ingredient
+        </h4>
+        <div *ngFor="let item of listData?.ingredient; let i = index" >
+          <h6 class="space">
+            - {{item.ingredient}}
+          </h6>
+        </div>
+        <h4>
+          Intruction
+        </h4>
+        <h6>
+          {{listData?.strInstructions}}
+        </h6>
+        <ion-icon name="star"></ion-icon>
+      </div>
+    </div>
+
+  </div>
+</ion-content>
